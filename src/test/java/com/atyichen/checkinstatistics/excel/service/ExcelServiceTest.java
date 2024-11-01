@@ -32,4 +32,16 @@ class ExcelServiceTest {
     public void testNoHoliday() {
         excelService.getNameToRecordExcludeHoliday();
     }
+
+    @Test
+    public void testWrite() {
+        Map<String, List<PersonRecord>> nameToRecordExcludeHoliday = excelService.getNameToRecordExcludeHoliday();
+        excelService.writeSignExcel(nameToRecordExcludeHoliday);
+    }
+
+    @Test
+    public void testDetailWrite() {
+        Map<String, List<PersonRecord>> nameToRecordExcludeHoliday = excelService.getNameToRecordExcludeHoliday();
+        excelService.writeDetailExcel(nameToRecordExcludeHoliday);
+    }
 }
