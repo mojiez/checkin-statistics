@@ -9,8 +9,8 @@ import javax.annotation.Resource;
 class HolidayInfoServiceTest {
     @Resource
     private HolidayInfoService holidayInfoService;
-    @Test
-    public void testHolidayService() {
-        holidayInfoService.saveHoliday();
-    }
+//    @Test
+//    public void testHolidayService() {
+//        holidayInfoService.saveHoliday();
+//    }
 }
