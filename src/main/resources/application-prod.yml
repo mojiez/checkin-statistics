@@ -1,13 +1,18 @@
+# 生产环境配置文件
 spring:
   application:
     name: CheckinStatistics
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/zkj
+    url: jdbc:mysql://172.18.0.2:3306/checkin_database
     username: root
-    password: 12345678
+    password: 123456
 
+# application-prod.yml
+file:
+  template:
+    path: /app/data
 
 mybatis-plus:
   configuration:

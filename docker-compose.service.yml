@@ -1,0 +1,32 @@
+# 业务服务的配置
+version: '3'
+services:
+  yi-frontend-checkin-service:
+    container_name: yi-frontend-checkin-statistics
+    build: # 服务的docker构建文件位置
+      context: /Users/mojie/Desktop/bigFront/checkin_sta_frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8850:80"
+#    volumes:
+#      - ./data:/app/data  # 将宿主机的 ./data 目录挂载到容器的 /app/data
+    networks:
+      - mynetwork
+
+  yi-backend-checkin-service:
+    container_name: yi-backend-checkin-statistics
+    build: # 服务的docker构建文件位置
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8102:8101"
+    volumes:
+      - ./data:/app/data  # 将宿主机的 ./data 目录挂载到容器的 /app/data
+    networks:
+      - mynetwork
+#    depends_on: # 本服务依赖的服务，控制启动先后顺序
+#      - yuoj-backend-gateway
+# 网络，不定义的话就是默认网络
+networks:
+  mynetwork:
+

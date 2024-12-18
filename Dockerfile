@@ -1,6 +1,9 @@
 # 基础镜像
 FROM openjdk:8-jdk-alpine
 
+# 安装字体
+RUN apk add --no-cache fontconfig ttf-dejavu
+
 # 指定工作目录
 WORKDIR /app
 

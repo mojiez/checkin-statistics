@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.xwpf.usermodel.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +33,9 @@ public class ExcelServiceImpl implements ExcelService {
     private String fontFamily = "宋体";
     @Resource
     private HolidayInfoService holidayInfoService;
+
+    @Value("${file.template.path}") // 配置化文件路径
+    private String templatePath;
 
     @Override
     public Map<String, List<PersonRecord>> getNameToRecordWithHoliday(MultipartFile file) {
@@ -66,6 +70,7 @@ public class ExcelServiceImpl implements ExcelService {
         String[] s = first.getValue().get(0).getAccessTime().split(" ")[0].split("-");
         ym = s[0] + "-" + s[1];
         System.out.println("年月是: " + ym);
+        System.out.println("测试一下打包嗷嗷");
 
         // 获取这个月的假期
         List<HolidayInfo> holidaysByMonth = holidayInfoService.getHolidaysByMonth(ym);
@@ -141,8 +146,9 @@ public class ExcelServiceImpl implements ExcelService {
         HorizontalCellStyleStrategy styleStrategy =
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
 
+        String fileName = templatePath + "/detail.xlsx";
         // 1. 检查并创建目录
-        File file = new File(detailFinal);
+        File file = new File(fileName);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -160,13 +166,13 @@ public class ExcelServiceImpl implements ExcelService {
 
         // 3. 写入excel
         try {
-            EasyExcel.write(detailFinal, PersonRecord.class)
+            EasyExcel.write(fileName, PersonRecord.class)
                     .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
                     .registerWriteHandler(styleStrategy)
                     .sheet("Sheet1")
                     .doWrite(dataList);
             System.out.println("excel写入成功");
-            return detailFinal;
+            return fileName;
         }catch (Exception e) {
             throw new RuntimeException("excel写入失败", e);
         }
@@ -184,7 +190,8 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public String writeSignExcel(Map<String, List<PersonRecord>> nameToRecord) {
-        String fileName = "/Users/mojie/Desktop/daka/sign.docx";
+//        String fileName = "/Users/mojie/Desktop/daka/sign.docx";
+        String fileName = templatePath + "/sign.docx";
         String ym = getYm(nameToRecord);
         // 1. 先完整读取文件
         XWPFDocument document;

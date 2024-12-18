@@ -6,8 +6,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/zkj
     username: root
-    password: 12345678
+    password: 123456
 
+file:
+  template:
+    path: /Users/mojie/Desktop/daka  # 测试环境使用测试资源目录
 
 mybatis-plus:
   configuration:
